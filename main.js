@@ -1,20 +1,47 @@
-
-// Create canvas variable
-
-//Set initial positions for ball and hole images.
-
+var canvas = new fabric.Canvas('myCanvas')
+ball_x=0;
+ball_y=0;
+hole_y = 500;
+hole_x = 800;
 
 block_image_width = 5;
 block_image_height = 5;
 
-function load_img(){
-	// write code to Upload golf image on the canvas
-	new_image();
+
+function load_img()
+{
+	fabric.Image.fromURL("golf-h.png", function(Img) {
+	golf_object = Img;
+
+	golf_object.scaleToWidth(50);
+	golf_object.scaleToHeight(50);
+	golf_object.set({
+	top:hole_y,
+	left:hole_y
+	});
+	canvas.add(golf_object);
+
+	});
+	
+
 }
 
-function new_image()
+function new_image(get_image)
 {
-	// write code to Upload ball image on canvas
+	fabric.Image.fromURL(get_image, function(Img) {
+	ball_object = Img;
+
+	ball_object.scaleToWidth(50);
+	ball_object.scaleToHeight(50);
+    ball_object.set({
+	top:ball_y,
+	left:ball_x
+	});
+	canvas.add(ball_object);
+
+	});
+	
+
 }
 
 window.addEventListener("keydown", my_keydown);
@@ -23,12 +50,15 @@ function my_keydown(e)
 {
 	keyPressed = e.keyCode;
 	console.log(keyPressed);
-	/* Check the coordinates of the ball and hole images to finish the game. 
-	And id coordinates matches them remove ball image, 
-	display "GAME OVER!!!" 
-	and make canvas border 'red'. */
-	
-	else{
+	if((ball_x==hole_y)&&(ball_y==hole_y)){
+	canvas.remove(ball_object);
+	document.getElementById("read").innerHTML="game is over, you win I lost.";
+	document.getElementById("myCanvas").style.backgroundColor="red";
+	document.getElementById("read").style.color="green";
+	document.getElementById("you").style.display="none";
+	}
+
+else{
 		if(keyPressed == '38')
 		{
 			up();
@@ -49,33 +79,67 @@ function my_keydown(e)
 			right();
 			console.log("right");
 		}
-	}
+
+		if(keyPressed == '83')
+		{
+			document.getElementById("read").innerHTML="game started";
+			new_image('ball.png'); 
+			console.log("game started");
+		}
+
+		
+}
 	
-	function up()
+}
+function up()
 	{
-		// Write a code to move ball upward.
+		if(ball_y>=0)
+		{
+			document.getElementById("read").innerHTML="you press up arrow key";
+			ball_y = ball_y - block_image_height;
+			console.log("block image height = " + block_image_height);
+			console.log("When Up arrow key is pressed, X = " + ball_x +" , Y= "+ball_y);
+			canvas.remove(ball_object);
+			new_image('ball.png'); 
+		}	
 	}
 
 	function down()
 	{
-		 // Write a code to move ball downward.
+		if(ball_y<=600)
+		{
+			document.getElementById("read").innerHTML="you press down arrow key";
+			ball_y = ball_y + block_image_height;
+			console.log("block image height = " + block_image_height);
+			console.log("When Down arrow key is pressed, X = " + ball_x +" , Y= "+ball_y);
+			canvas.remove(ball_object);
+			new_image('ball.png'); 
+		}	
 	}
 
 	function left()
 	{
-		if(ball_x >5)
+		if(ball_x>=0)
 		{
-			// Write a code to move ball left side.
-		}
+			document.getElementById("read").innerHTML="you press left arrow key";
+			ball_x = ball_x - block_image_width;
+			console.log("block image width = " + block_image_width);
+			console.log("When Left arrow key is pressed, X = " + ball_x +" , Y= "+ball_y);
+			canvas.remove(ball_object);
+			new_image('ball.png'); 
+		}	
 	}
 
 	function right()
 	{
-		if(ball_x <=1050)
+		if(ball_x<=800)
 		{
-			// Write a code to move ball right side.
-		}
+			document.getElementById("read").innerHTML="you press right arrow key";
+			ball_x = ball_x + block_image_width;
+			console.log("block image width = " + block_image_width);
+			console.log("When Right arrow key is pressed, X = " + ball_x +" , Y= "+ball_y);
+			canvas.remove(ball_object);
+			new_image('ball.png'); 
+		}	
 	}
 	
-}
-
