@@ -12,10 +12,14 @@
 }
 
 
-#hd3{
-	display: inline-block;
+#read{
+	display: block;
 	color: red;
 	background-color: aliceblue;
-	font-family: fantasy;
+	font-family: cursive;
+	width: 200px;
 }
 
+h3 {
+	background-color: white;
+}
